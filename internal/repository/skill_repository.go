@@ -17,7 +17,6 @@ func (r *SkillRepository) Create(skill *model.Skill) error {
 
 func (r *SkillRepository) GetAll() ([]model.Skill, error) {
 	var skills []model.Skill
-	// Optional: Category wise sort kar sakte hain
 	result := config.DB.Order("category asc").Find(&skills)
 	return skills, result.Error
 }
