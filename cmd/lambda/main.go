@@ -10,7 +10,6 @@ import (
 	"github.com/coderkamlesh/portfolio_backend/config"
 	"github.com/coderkamlesh/portfolio_backend/internal/http/routes"
 	"github.com/coderkamlesh/portfolio_backend/internal/model"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,14 +24,6 @@ func init() {
 
 	r := gin.New()
 	r.Use(gin.Recovery())
-
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"}, // Production mein specific domain dalna
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"},
-		ExposeHeaders:    []string{"Content-Length", "Content-Type"},
-		AllowCredentials: true,
-	}))
 
 	r.Use(func(c *gin.Context) {
 		log.Printf("[GIN] %s %s | Headers: %v", c.Request.Method, c.Request.URL.Path, c.Request.Header)

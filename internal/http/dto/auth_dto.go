@@ -25,5 +25,4 @@ type UpdateProfileRequest struct {
 	ResumeLink   string `json:"resume_link"`
 	GithubLink   string `json:"github_link"`
 	LinkedinLink string `json:"linkedin_link"`
-	AvatarURL    string `json:"avatar_url"`
 }

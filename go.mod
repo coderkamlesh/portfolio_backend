@@ -6,7 +6,6 @@ require (
 	github.com/aws/aws-lambda-go v1.52.0
 	github.com/awslabs/aws-lambda-go-api-proxy v0.16.2
 	github.com/cloudinary/cloudinary-go/v2 v2.14.0
-	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-gonic/gin v1.11.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/joho/godotenv v1.5.1

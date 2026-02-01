@@ -18,18 +18,19 @@ func SetupRoutes(r *gin.Engine) {
 	skillRepo := repository.NewSkillRepository()
 	expRepo := repository.NewExperienceRepository()
 
-	// 3. Services (Ab yahan CLD pass karna hai)
-	authService := service.NewAuthService(userRepo, cld)          // <-- Changed
-	projectService := service.NewProjectService(projectRepo, cld) // <-- Changed
-	skillService := service.NewSkillService(skillRepo)            // <-- Changed
-	expService := service.NewExperienceService(expRepo)           // <-- Changed
+	// 3. Services (Sabme CLD pass kar diya)
+	authService := service.NewAuthService(userRepo, cld)
+	projectService := service.NewProjectService(projectRepo, cld)
+
+	// Yahan changes hain:
+	skillService := service.NewSkillService(skillRepo, cld)  // <-- Added cld
+	expService := service.NewExperienceService(expRepo, cld) // <-- Added cld
 
 	// 4. Handlers
 	authHandler := handler.NewAuthHandler(authService)
 	projectHandler := handler.NewProjectHandler(projectService)
 	skillHandler := handler.NewSkillHandler(skillService)
 	expHandler := handler.NewExperienceHandler(expService)
-	// New Upload Handler
 	uploadHandler := handler.NewUploadHandler(cld)
 
 	api := r.Group("/api")
@@ -67,10 +68,15 @@ func SetupRoutes(r *gin.Engine) {
 			admin.PUT("/experiences/:id", expHandler.Update)
 			admin.DELETE("/experiences/:id", expHandler.Delete)
 
+			//update images
+			//1. avatar
 			admin.PATCH("/hero/avatar", authHandler.UpdateAvatar)
-
 			// 2. Project Image
 			admin.PATCH("/projects/image/:id", projectHandler.UpdateImage)
+			admin.PATCH("/skills/icon/:id", skillHandler.UpdateIcon)
+
+			// 5. Experience Logo (New)
+			admin.PATCH("/experiences/logo/:id", expHandler.UpdateLogo)
 		}
 	}
 }

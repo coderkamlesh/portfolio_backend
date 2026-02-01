@@ -82,7 +82,7 @@ func (h *ProjectHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Project deleted successfully"})
 }
 
-// PUT /api/admin/projects/:id/image
+// /api/admin/projects/:id/image
 func (h *ProjectHandler) UpdateImage(c *gin.Context) {
 	idParam := c.Param("id")
 	id, _ := strconv.ParseUint(idParam, 10, 32)

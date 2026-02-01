@@ -93,7 +93,6 @@ func (h *AuthHandler) UpdateHero(c *gin.Context) {
 		ResumeLink:   req.ResumeLink,
 		GithubLink:   req.GithubLink,
 		LinkedinLink: req.LinkedinLink,
-		AvatarURL:    req.AvatarURL,
 	}
 
 	if err := h.Service.UpdateProfile(&user); err != nil {
