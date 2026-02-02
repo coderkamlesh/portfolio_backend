@@ -6,6 +6,7 @@ require (
 	github.com/aws/aws-lambda-go v1.52.0
 	github.com/awslabs/aws-lambda-go-api-proxy v0.16.2
 	github.com/cloudinary/cloudinary-go/v2 v2.14.0
+	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-gonic/gin v1.11.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/joho/godotenv v1.5.1
@@ -24,7 +25,6 @@ require (
 	github.com/coder/websocket v1.8.12 // indirect
 	github.com/creasty/defaults v1.7.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.12 // indirect
-	github.com/gin-contrib/cors v1.7.6 // indirect
 	github.com/gin-contrib/sse v1.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
