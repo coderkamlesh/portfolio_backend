@@ -2,18 +2,23 @@ package service
 
 import (
 	"errors"
+	"mime/multipart"
 
+	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/coderkamlesh/portfolio_backend/internal/http/dto"
 	"github.com/coderkamlesh/portfolio_backend/internal/model"
 	"github.com/coderkamlesh/portfolio_backend/internal/repository"
+	"github.com/coderkamlesh/portfolio_backend/internal/utils"
 )
 
 type ExperienceService struct {
-	Repo *repository.ExperienceRepository
+	Repo *repository.ExperienceRepository // <--- Yahan * add kiya
+	Cld  *cloudinary.Cloudinary
 }
 
-func NewExperienceService(repo *repository.ExperienceRepository) *ExperienceService {
-	return &ExperienceService{Repo: repo}
+// Update Constructor to accept Pointer
+func NewExperienceService(repo *repository.ExperienceRepository, cld *cloudinary.Cloudinary) *ExperienceService { // <--- Yahan bhi * add kiya
+	return &ExperienceService{Repo: repo, Cld: cld}
 }
 
 func (s *ExperienceService) GetAllExperiences() ([]model.Experience, error) {
@@ -61,4 +66,27 @@ func (s *ExperienceService) DeleteExperience(id uint) error {
 		return errors.New("experience not found")
 	}
 	return s.Repo.Delete(id)
+}
+func (s *ExperienceService) UpdateExperienceLogo(id uint, file *multipart.FileHeader) (string, error) {
+	exp, err := s.Repo.FindByID(id)
+	if err != nil {
+		return "", err
+	}
+
+	// Delete Old Logo
+	if exp.Logo != "" {
+		_ = utils.DeleteFromCloudinary(s.Cld, exp.Logo)
+	}
+
+	// Upload New Logo
+	newURL, err := utils.UploadToCloudinary(s.Cld, file, "experiences")
+	if err != nil {
+		return "", err
+	}
+
+	// Update DB
+	exp.Logo = newURL
+	err = s.Repo.Update(exp)
+
+	return newURL, err
 }

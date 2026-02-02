@@ -25,7 +25,6 @@ func init() {
 	r := gin.New()
 	r.Use(gin.Recovery())
 
-
 	r.Use(func(c *gin.Context) {
 		log.Printf("[GIN] %s %s | Headers: %v", c.Request.Method, c.Request.URL.Path, c.Request.Header)
 		c.Next()
@@ -46,7 +45,6 @@ func init() {
 }
 
 func Handler(ctx context.Context, req events.APIGatewayV2HTTPRequest) (events.APIGatewayV2HTTPResponse, error) {
-	// Debug logging
 	log.Printf("[LAMBDA] RawPath: %s | Path: %s | Method: %s", req.RawPath, req.RequestContext.HTTP.Path, req.RequestContext.HTTP.Method)
 	log.Printf("[LAMBDA] Headers: %v", req.Headers)
 

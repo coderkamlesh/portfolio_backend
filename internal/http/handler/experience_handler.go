@@ -81,3 +81,23 @@ func (h *ExperienceHandler) Delete(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Experience deleted successfully"})
 }
+
+// Add this method to ExperienceHandler
+func (h *ExperienceHandler) UpdateLogo(c *gin.Context) {
+	idParam := c.Param("id")
+	id, _ := strconv.ParseUint(idParam, 10, 32)
+
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Logo file is required"})
+		return
+	}
+
+	url, err := h.Service.UpdateExperienceLogo(uint(id), file)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Experience logo updated", "url": url})
+}

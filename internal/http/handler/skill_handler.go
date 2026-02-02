@@ -81,3 +81,23 @@ func (h *SkillHandler) Delete(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Skill deleted successfully"})
 }
+
+// Add this method to SkillHandler
+func (h *SkillHandler) UpdateIcon(c *gin.Context) {
+	idParam := c.Param("id")
+	id, _ := strconv.ParseUint(idParam, 10, 32)
+
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Icon file is required"})
+		return
+	}
+
+	url, err := h.Service.UpdateSkillIcon(uint(id), file)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Skill icon updated", "url": url})
+}
