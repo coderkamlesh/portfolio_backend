@@ -1,0 +1,6 @@
+bin/
+obj/
+vendor/
+.git/
+.env.example
+deployment.zip
